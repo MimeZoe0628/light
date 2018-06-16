@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\application\application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\boosting\boosting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\boosting\gbdt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\boosting\gbdt_model_text.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\boosting\gbdt_prediction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\boosting\prediction_early_stop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\io\bin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\io\config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\io\dataset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\io\dataset_loader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\io\metadata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\io\parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\io\tree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\metric\dcg_calculator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\metric\metric.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\objective\objective_function.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\network\linker_topo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\network\linkers_mpi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\network\linkers_socket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\network\network.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\treelearner\data_parallel_tree_learner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\treelearner\feature_parallel_tree_learner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\treelearner\gpu_tree_learner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\treelearner\serial_tree_learner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\treelearner\serial_tree_learner_backup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\treelearner\tree_learner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\OpenSource\LightGBM-master\python-package\compile\src\treelearner\voting_parallel_tree_learner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="F:\OpenSource\LightGBM-master\python-package\compile\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{57F7E7BD-F585-3D5A-BF68-95490B2949BC}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

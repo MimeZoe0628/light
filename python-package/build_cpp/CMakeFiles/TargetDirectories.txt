@@ -1,0 +1,5 @@
+F:/OpenSource/LightGBM-master/python-package/build_cpp/CMakeFiles/lightgbm.dir
+F:/OpenSource/LightGBM-master/python-package/build_cpp/CMakeFiles/_lightgbm.dir
+F:/OpenSource/LightGBM-master/python-package/build_cpp/CMakeFiles/INSTALL.dir
+F:/OpenSource/LightGBM-master/python-package/build_cpp/CMakeFiles/ALL_BUILD.dir
+F:/OpenSource/LightGBM-master/python-package/build_cpp/CMakeFiles/ZERO_CHECK.dir

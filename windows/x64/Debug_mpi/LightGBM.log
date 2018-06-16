@@ -1,0 +1,44 @@
+﻿  application.cpp
+  boosting.cpp
+f:\opensource\lightgbm-master\src\boosting\ada_goss.hpp(126): warning C4100: “cur_rand”: 未引用的形参
+  gbdt.cpp
+  gbdt_model_text.cpp
+  gbdt_prediction.cpp
+..\src\boosting\gbdt_prediction.cpp(13): warning C4189: “early_stop_round_counter”: 局部变量已初始化但不引用
+  prediction_early_stop.cpp
+  c_api.cpp
+  bin.cpp
+  config.cpp
+  dataset.cpp
+  dataset_loader.cpp
+  metadata.cpp
+  parser.cpp
+  tree.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xutility(2294): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xutility(2294): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
+  ..\src\io\tree.cpp(656): note: 参见对正在编译的函数 模板 实例化“_OutIt *std::copy<LightGBM::Tree::PathElement*,LightGBM::Tree::PathElement*>(_InIt,_InIt,_OutIt)”的引用
+          with
+          [
+              _OutIt=LightGBM::Tree::PathElement *,
+              _InIt=LightGBM::Tree::PathElement *
+          ]
+  lightgbm_R.cpp
+  dcg_calculator.cpp
+  metric.cpp
+  network.cpp
+f:\opensource\lightgbm-master\src\network\linkers.h(22): fatal error C1083: 无法打开包括文件: “mpi.h”: No such file or directory
+  linkers_mpi.cpp
+f:\opensource\lightgbm-master\src\network\linkers.h(22): fatal error C1083: 无法打开包括文件: “mpi.h”: No such file or directory
+  linkers_socket.cpp
+  正在生成代码...
+  正在编译...
+  linker_topo.cpp
+  objective_function.cpp
+  main.cpp
+  data_parallel_tree_learner.cpp
+  feature_parallel_tree_learner.cpp
+  serial_tree_learner.cpp
+..\src\treelearner\serial_tree_learner.cpp(258): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+  tree_learner.cpp
+  voting_parallel_tree_learner.cpp
+  正在生成代码...

@@ -1,0 +1,27 @@
+﻿  boosting.cpp
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(93): warning C4267: “+=”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(154): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(189): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(191): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(324): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  gbdt.cpp
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(93): warning C4267: “+=”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(154): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(189): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(191): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(324): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  gbdt_model_text.cpp
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(93): warning C4267: “+=”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(154): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(189): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(191): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(324): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  gbdt_prediction.cpp
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(93): warning C4267: “+=”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(154): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(189): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(191): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(324): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+..\src\boosting\gbdt_prediction.cpp(13): warning C4189: “early_stop_round_counter”: 局部变量已初始化但不引用
+  正在生成代码...
+  LightGBM.vcxproj -> F:\OpenSource\LightGBM-master\windows\x64\Debug\lightgbm.exe

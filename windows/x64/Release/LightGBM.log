@@ -1,0 +1,60 @@
+﻿  application.cpp
+  boosting.cpp
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(93): warning C4267: “+=”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(154): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(189): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(191): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(393): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(385): warning C4189: “threshold”: 局部变量已初始化但不引用
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(408): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  gbdt.cpp
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(93): warning C4267: “+=”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(154): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(189): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(191): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(393): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(385): warning C4189: “threshold”: 局部变量已初始化但不引用
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(408): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  gbdt_model_text.cpp
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(93): warning C4267: “+=”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(154): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(189): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(191): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(393): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(385): warning C4189: “threshold”: 局部变量已初始化但不引用
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(408): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  gbdt_prediction.cpp
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(93): warning C4267: “+=”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(154): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(189): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(191): warning C4267: “初始化”: 从“size_t”转换到“LightGBM::data_size_t”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(393): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(385): warning C4189: “threshold”: 局部变量已初始化但不引用
+f:\opensource\lightgbm-master\src\boosting\feature_selection.hpp(408): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+..\src\boosting\gbdt_prediction.cpp(13): warning C4189: “early_stop_round_counter”: 局部变量已初始化但不引用
+  c_api.cpp
+  config.cpp
+  dataset.cpp
+  dataset_loader.cpp
+  metadata.cpp
+  parser.cpp
+  tree.cpp
+  main.cpp
+  dcg_calculator.cpp
+  metric.cpp
+  linker_topo.cpp
+  linkers_socket.cpp
+  network.cpp
+  objective_function.cpp
+  data_parallel_tree_learner.cpp
+  正在编译...
+  feature_parallel_tree_learner.cpp
+  serial_tree_learner.cpp
+..\src\treelearner\serial_tree_learner.cpp(272): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+  tree_learner.cpp
+..\src\treelearner\tree_learner.cpp(34): warning C4100: “feature_sampling_by_importance”: 未引用的形参
+  voting_parallel_tree_learner.cpp
+  application.obj : 找到 MSIL .netmodule 或使用 /GL 编译的模块；正在使用 /LTCG 重新启动链接；将 /LTCG 添加到链接命令行以改进链接器性能
+serial_tree_learner.obj : error LNK2005: "class std::chrono::duration<double,struct std::ratio<1,1000> > LightGBM::train_time" (?train_time@LightGBM@@3V?$duration@NU?$ratio@$00$0DOI@@std@@@chrono@std@@A) 已经在 gbdt.obj 中定义
+    正在创建库 F:\OpenSource\LightGBM-master\windows\x64\Release\lightgbm.lib 和对象 F:\OpenSource\LightGBM-master\windows\x64\Release\lightgbm.exp
+F:\OpenSource\LightGBM-master\windows\x64\Release\lightgbm.exe : fatal error LNK1169: 找到一个或多个多重定义的符号
