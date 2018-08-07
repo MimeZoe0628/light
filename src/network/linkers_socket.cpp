@@ -51,11 +51,11 @@ Linkers::Linkers(NetworkConfig config) {
     linkers_.push_back(nullptr);
   }
 
-  // construct communication topo
+  // construct communication topo		构造通信拓扑对象
   bruck_map_ = BruckMap::Construct(rank_, num_machines_);
   recursive_halving_map_ = RecursiveHalvingMap::Construct(rank_, num_machines_);
 
-  // construct linkers
+  // construct linkers					构造连接器
   Construct();
   // free listener
   listener_->Close();
@@ -200,7 +200,7 @@ void Linkers::Construct() {
   // start connect
   for (auto it = need_connect.begin(); it != need_connect.end(); ++it) {
     int out_rank = it->first;
-    // let smaller rank connect to larger rank
+    // let smaller rank connect to larger rank			另更小的rank连接更大的rank
     if (out_rank > rank_) {
       TcpSocket cur_socket;
       for (int i = 0; i < connect_fail_retry_cnt; ++i) {

@@ -15,9 +15,11 @@
 namespace LightGBM {
 
 /*!
-* \brief Feature parallel learning algorithm.
+* \brief Feature parallel learning algorithm.		特征并行学习算法
 *        Different machine will find best split on different features, then sync global best split
 *        It is recommonded used when #data is small or #feature is large
+		不同的特征分配给不同的机器，每个机器找出本地特征的最佳划分，并同步到全局最优划分。
+		当#data 很小或者#feature很大时，建议使用该方法。
 */
 template <typename TREELEARNER_T>
 class FeatureParallelTreeLearner: public TREELEARNER_T {
@@ -41,9 +43,10 @@ private:
 };
 
 /*!
-* \brief Data parallel learning algorithm.
+* \brief Data parallel learning algorithm.			数据并行学习算法
 *        Workers use local data to construct histograms locally, then sync up global histograms.
 *        It is recommonded used when #data is large or #feature is small
+*		Worker使用本地数据构造本地直方图，然后同步到全局直方图。该算法适用于#data很大或者#feature很小的情形
 */
 template <typename TREELEARNER_T>
 class DataParallelTreeLearner: public TREELEARNER_T {
@@ -93,10 +96,11 @@ private:
 };
 
 /*!
-* \brief Voting based data parallel learning algorithm.
+* \brief Voting based data parallel learning algorithm.			基于数据并行学习算法的Voting算法
 * Like data parallel, but not aggregate histograms for all features.
 * Here using voting to reduce features, and only aggregate histograms for selected features.
 * When #data is large and #feature is large, you can use this to have better speed-up
+*	适用于#data 和 #feature都很大的情形
 */
 template <typename TREELEARNER_T>
 class VotingParallelTreeLearner: public TREELEARNER_T {
@@ -180,9 +184,9 @@ private:
   std::vector<FeatureMetainfo> feature_metas_;
 };
 
-// To-do: reduce the communication cost by using bitset to communicate.
+// To-do: reduce the communication cost by using bitset to communicate.	通过使用bitset来通信以减小通信代价
 inline void SyncUpGlobalBestSplit(char* input_buffer_, char* output_buffer_, SplitInfo* smaller_best_split, SplitInfo* larger_best_split, int max_cat_threshold) {
-  // sync global best info
+  // sync global best info			同步全局最优划分信息
   int size = SplitInfo::Size(max_cat_threshold);
   smaller_best_split->CopyTo(input_buffer_);
   larger_best_split->CopyTo(input_buffer_ + size);

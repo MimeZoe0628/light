@@ -33,14 +33,14 @@ typedef void* BoosterHandle;
 #define C_API_PREDICT_CONTRIB    (3)
 
 /*!
-* \brief get string message of the last error
+* \brief get string message of the last error	获取上一个错误消息字符串，当前文件中的所有函数成功则返回0，发生错误则返回-1.
 *  all function in this file will return 0 when succeed
 *  and -1 when an error occured,
 * \return const char* error inforomation
 */
 LIGHTGBM_C_EXPORT const char* LGBM_GetLastError();
 
-// --- start Dataset interface
+// --- start Dataset interface				数据集接口
 
 /*!
 * \brief load data set from file like the command_line LightGBM do
@@ -247,7 +247,7 @@ LIGHTGBM_C_EXPORT int LGBM_DatasetGetFeatureNames(
 
 
 /*!
-* \brief free space for dataset
+* \brief free space for dataset			释放数据集占用的空间
 * \return 0 when succeed, -1 when failure happens
 */
 LIGHTGBM_C_EXPORT int LGBM_DatasetFree(DatasetHandle handle);
@@ -311,7 +311,7 @@ LIGHTGBM_C_EXPORT int LGBM_DatasetGetNumData(DatasetHandle handle,
 LIGHTGBM_C_EXPORT int LGBM_DatasetGetNumFeature(DatasetHandle handle,
                                                 int* out);
 
-// --- start Booster interfaces
+// --- start Booster interfaces				Booster对象接口
 
 /*!
 * \brief create an new boosting learner

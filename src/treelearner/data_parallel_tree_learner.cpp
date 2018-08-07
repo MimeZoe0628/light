@@ -19,12 +19,12 @@ DataParallelTreeLearner<TREELEARNER_T>::~DataParallelTreeLearner() {
 
 template <typename TREELEARNER_T>
 void DataParallelTreeLearner<TREELEARNER_T>::Init(const Dataset* train_data, bool is_constant_hessian) {
-  // initialize SerialTreeLearner
+  // initialize SerialTreeLearner				初始化SerialTreeLearner
   TREELEARNER_T::Init(train_data, is_constant_hessian);
-  // Get local rank and global machine size
+  // Get local rank and global machine size		获取本地rank和全局机器大小
   rank_ = Network::rank();
   num_machines_ = Network::num_machines();
-  // allocate buffer for communication
+  // allocate buffer for communication			为通信分配缓冲区
   size_t buffer_size = this->train_data_->NumTotalBin() * sizeof(HistogramBinEntry);
 
   input_buffer_.resize(buffer_size);
@@ -49,14 +49,16 @@ void DataParallelTreeLearner<TREELEARNER_T>::ResetConfig(const TreeConfig* tree_
 template <typename TREELEARNER_T>
 void DataParallelTreeLearner<TREELEARNER_T>::BeforeTrain() {
   TREELEARNER_T::BeforeTrain();
-  // generate feature partition for current tree
+  // generate feature partition for current tree	为当前的树生成特征划分
+  // feature_distribution[机器索引] = Vector<int>(元素为内部特征索引)
+  // num_bins_distributed[机器索引] = 当前机器中分配到的所有特征的所有bin的总数
   std::vector<std::vector<int>> feature_distribution(num_machines_, std::vector<int>());
-  std::vector<int> num_bins_distributed(num_machines_, 0);
-  for (int i = 0; i < this->train_data_->num_total_features(); ++i) {
+  std::vector<int> num_bins_distributed(num_machines_, 0);			//每个机器上的bin数目
+  for (int i = 0; i < this->train_data_->num_total_features(); ++i) {			//遍历所有特征
     int inner_feature_index = this->train_data_->InnerFeatureIndex(i);
     if (inner_feature_index == -1) { continue; }
     if (this->is_feature_used_[inner_feature_index]) {
-      int cur_min_machine = static_cast<int>(ArrayArgs<int>::ArgMin(num_bins_distributed));
+      int cur_min_machine = static_cast<int>(ArrayArgs<int>::ArgMin(num_bins_distributed));		//获取bin数量最少的结点
       feature_distribution[cur_min_machine].push_back(inner_feature_index);
       auto num_bin = this->train_data_->FeatureNumBin(inner_feature_index);
       if (this->train_data_->FeatureBinMapper(inner_feature_index)->GetDefaultBin() == 0) {
@@ -66,40 +68,40 @@ void DataParallelTreeLearner<TREELEARNER_T>::BeforeTrain() {
     }
     is_feature_aggregated_[inner_feature_index] = false;
   }
-  // get local used feature
+  // get local used feature			获取本地使用的特征
   for (auto fid : feature_distribution[rank_]) {
     is_feature_aggregated_[fid] = true;
   }
 
-  // get block start and block len for reduce scatter
+  // get block start and block len for reduce scatter		获取用于reduce scatter的块起始索引和块长度
   reduce_scatter_size_ = 0;
   for (int i = 0; i < num_machines_; ++i) {
     block_len_[i] = 0;
-    for (auto fid : feature_distribution[i]) {
+    for (auto fid : feature_distribution[i]) {			//	获取每个节点中的所有特征
       auto num_bin = this->train_data_->FeatureNumBin(fid);
       if (this->train_data_->FeatureBinMapper(fid)->GetDefaultBin() == 0) {
         num_bin -= 1;
       }
-      block_len_[i] += num_bin * sizeof(HistogramBinEntry);
+      block_len_[i] += num_bin * sizeof(HistogramBinEntry);		//计算每个节点的块大小（即当前节点存储的bin的总大小）
     }
     reduce_scatter_size_ += block_len_[i];
   }
 
-  block_start_[0] = 0;
+  block_start_[0] = 0;						//计算块的起始位置(当前块的起始位置=上一个块的起始位置+上一个块的块大小)
   for (int i = 1; i < num_machines_; ++i) {
     block_start_[i] = block_start_[i - 1] + block_len_[i - 1];
   }
 
   // get buffer_write_start_pos_
   int bin_size = 0;
-  for (int i = 0; i < num_machines_; ++i) {
-    for (auto fid : feature_distribution[i]) {
+  for (int i = 0; i < num_machines_; ++i) {		//遍历所有节点
+    for (auto fid : feature_distribution[i]) {			//遍历每一个节点中的所有特征
       buffer_write_start_pos_[fid] = bin_size;
       auto num_bin = this->train_data_->FeatureNumBin(fid);
       if (this->train_data_->FeatureBinMapper(fid)->GetDefaultBin() == 0) {
         num_bin -= 1;
       }
-      bin_size += num_bin * sizeof(HistogramBinEntry);
+      bin_size += num_bin * sizeof(HistogramBinEntry);		//一直累加计算，即保存在一个一次性分配的空间里面
     }
   }
 
@@ -114,7 +116,7 @@ void DataParallelTreeLearner<TREELEARNER_T>::BeforeTrain() {
     bin_size += num_bin * sizeof(HistogramBinEntry);
   }
 
-  // sync global data sumup info
+  // sync global data sumup info			同步全局数据的信息总和
   std::tuple<data_size_t, double, double> data(this->smaller_leaf_splits_->num_data_in_leaf(),
                                                this->smaller_leaf_splits_->sum_gradients(), this->smaller_leaf_splits_->sum_hessians());
   int size = sizeof(data);
@@ -128,12 +130,13 @@ void DataParallelTreeLearner<TREELEARNER_T>::BeforeTrain() {
     while (used_size < len) {
       p1 = reinterpret_cast<const std::tuple<data_size_t, double, double> *>(src);
       p2 = reinterpret_cast<std::tuple<data_size_t, double, double> *>(dst);
+	  // 获取元组中的对应元素并相加
       std::get<0>(*p2) = std::get<0>(*p2) + std::get<0>(*p1);
       std::get<1>(*p2) = std::get<1>(*p2) + std::get<1>(*p1);
       std::get<2>(*p2) = std::get<2>(*p2) + std::get<2>(*p1);
       src += type_size;
       dst += type_size;
-      used_size += type_size;
+      used_size += type_size;		//累计一条元组的大小
     }
   });
   // copy back
@@ -147,16 +150,16 @@ void DataParallelTreeLearner<TREELEARNER_T>::BeforeTrain() {
 template <typename TREELEARNER_T>
 void DataParallelTreeLearner<TREELEARNER_T>::FindBestSplits() {
   TREELEARNER_T::ConstructHistograms(this->is_feature_used_, true);
-  // construct local histograms
+  // construct local histograms				构造本地直方图
   #pragma omp parallel for schedule(static)
   for (int feature_index = 0; feature_index < this->num_features_; ++feature_index) {
     if ((!this->is_feature_used_.empty() && this->is_feature_used_[feature_index] == false)) continue;
-    // copy to buffer
+    // copy to buffer					复制到缓冲区
     std::memcpy(input_buffer_.data() + buffer_write_start_pos_[feature_index],
                 this->smaller_leaf_histogram_array_[feature_index].RawData(),
                 this->smaller_leaf_histogram_array_[feature_index].SizeOfHistgram());
   }
-  // Reduce scatter for histogram
+  // Reduce scatter for histogram		对直方图进行reduce scatter操作
   Network::ReduceScatter(input_buffer_.data(), reduce_scatter_size_, block_start_.data(),
                          block_len_.data(), output_buffer_.data(), &HistogramBinEntry::SumReducer);
   this->FindBestSplitsFromHistograms(this->is_feature_used_, true);

@@ -26,7 +26,7 @@
 namespace LightGBM {
 
 /*!
-* \brief An network basic communication warpper.
+* \brief An network basic communication warpper.		基本的网络通信包装器，对低层级的通信方法进行包装。例如：mpi， socket等等
 * Will warp low level communication methods, e.g. mpi, socket and so on.
 * This class will wrap all linkers to other machines if needs
 */
@@ -37,7 +37,7 @@ public:
   }
   /*!
   * \brief Constructor
-  * \param config Config of network settings
+  * \param config Config of network settings		网络设置的配置
   */
   explicit Linkers(NetworkConfig config);
   /*!
@@ -45,21 +45,21 @@ public:
   */
   ~Linkers();
   /*!
-  * \brief Recv data, blocking
-  * \param rank Which rank will send data to local machine
+  * \brief Recv data, blocking			
+  * \param rank Which rank will send data to local machine	将数据发送到本地机器的rank
   * \param data Pointer of receive data
-  * \prama len Recv size, will block until recive len size of data
+  * \prama len Recv size, will block until recive len size of data		接收到的数据块的大小，阻塞方法，直到所有数据接收完毕
   */
   inline void Recv(int rank, char* data, int len) const;
   /*!
   * \brief Send data, blocking
-  * \param rank Which rank local machine will send to
+  * \param rank Which rank local machine will send to			本地机器发送数据的目标机器rank
   * \param data Pointer of send data
   * \prama len Send size
   */
   inline void Send(int rank, char* data, int len) const;
   /*!
-  * \brief Send and Recv at same time, blocking
+  * \brief Send and Recv at same time, blocking					同时接收和发送数据（全双工？），阻塞方法
   * \param send_rank
   * \param send_data
   * \prama send_len
@@ -93,13 +93,13 @@ public:
   */
   void TryBind(int port);
   /*!
-  * \brief Set socket to rank
+  * \brief Set socket to rank			为rank设置socket
   * \param rank
   * \param socket
   */
   void SetLinker(int rank, const TcpSocket& socket);
   /*!
-  * \brief Thread for listening
+  * \brief Thread for listening			用来监听的线程
   * \param incoming_cnt Number of incoming machines
   */
   void ListenThread(int incoming_cnt);
@@ -114,7 +114,7 @@ public:
   */
   void ParseMachineList(const std::string& machines, const std::string& filename);
   /*!
-  * \brief Check one linker is connected or not
+  * \brief Check one linker is connected or not			检查linker是否已经连接
   * \param rank
   * \return True if linker is connected
   */
@@ -124,7 +124,7 @@ public:
   */
   void PrintLinkers();
 
-  #endif  // USE_SOCKET
+  #endif  // USE_SOCKET				SOCKET方法的包装
 
 
 private:
@@ -246,9 +246,9 @@ inline void Linkers::Send(int rank, char* data, int len) const {
 inline void Linkers::SendRecv(int send_rank, char* send_data, int send_len,
   int recv_rank, char* recv_data, int recv_len) {
   MPI_Request send_request;
-  // send first, non-blocking
+  // send first, non-blocking		先发送， 非阻塞方法
   MPI_SAFE_CALL(MPI_Isend(send_data, send_len, MPI_BYTE, send_rank, 0, MPI_COMM_WORLD, &send_request));
-  // then receive, blocking
+  // then receive, blocking			再接收， 阻塞方法
   MPI_Status status;
   int read_cnt = 0;
   while (read_cnt < recv_len) {
@@ -257,7 +257,7 @@ inline void Linkers::SendRecv(int send_rank, char* send_data, int send_len,
     MPI_SAFE_CALL(MPI_Get_count(&status, MPI_BYTE, &cur_cnt));
     read_cnt += cur_cnt;
   }
-  // wait for send complete
+  // wait for send complete		等待发送请求操作完毕
   MPI_SAFE_CALL(MPI_Wait(&send_request, &status));
 }
 
