@@ -11,10 +11,12 @@
 
 /*!
 * To avoid type conversion on large data, most of our expose interface support both for float_32 and float_64.
-* Except following:
-* 1. gradients and hessians.
-* 2. Get current score for training data and validation
+	为了避免大型数据集上的类型转换，我们暴露的大多数接口均用于类型float_32 和float_64
+* Except following:	除了以下内容：
+* 1. gradients and hessians.				1、一阶导数和二阶导数
+* 2. Get current score for training data and validation		2、训练集和验证集的当前的分数
 * The reason is because they are called frequently, the type-conversion on them maybe time cost.
+*	原因：这些内容被频繁调用，类型转换操作可能具有较大时间开销
 */
 
 #include <LightGBM/export.h>

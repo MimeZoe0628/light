@@ -305,7 +305,7 @@ std::vector<int> SerialTreeLearner::GetValidFeatureIndices()
 }
 void SerialTreeLearner::BeforeTrain() {
 
-  // reset histogram pool
+  // reset histogram pool			重置直方图池
   histogram_pool_.ResetMap();
   if (tree_config_->feature_fraction < 1) {
 	  int used_feature_cnt = static_cast<int>(valid_feature_indices_.size()*tree_config_->feature_fraction);
@@ -345,27 +345,27 @@ void SerialTreeLearner::BeforeTrain() {
 	  }
   }
 
-  // initialize data partition
+  // initialize data partition			初始化数据划分
   data_partition_->Init();
 
-  // reset the splits for leaves
+  // reset the splits for leaves		为叶子重置划分
   for (int i = 0; i < tree_config_->num_leaves; ++i) {
     best_split_per_leaf_[i].Reset();
   }
 
-  // Sumup for root
+  // Sumup for root						对根进行加和
   if (data_partition_->leaf_count(0) == num_data_) {
     // use all data
     smaller_leaf_splits_->Init(gradients_, hessians_);
 
   } else {
-    // use bagging, only use part of data
+    // use bagging, only use part of data		使用bagging
     smaller_leaf_splits_->Init(0, data_partition_.get(), gradients_, hessians_);
   }
 
   larger_leaf_splits_->Init();
 
-  // if has ordered bin, need to initialize the ordered bin
+  // if has ordered bin, need to initialize the ordered bin			如果有已经排序的bin，需要初始化有序的bin
   if (has_ordered_bin_) {
     #ifdef TIMETAG
     auto start_time = std::chrono::steady_clock::now();
@@ -381,9 +381,9 @@ void SerialTreeLearner::BeforeTrain() {
       }
       OMP_THROW_EX();
     } else {
-      // bagging, only use part of data
+      // bagging, only use part of data				bagging， 仅仅使用部分数据
 
-      // mark used data
+      // mark used data				标记使用的数据
       const data_size_t* indices = data_partition_->indices();
       data_size_t begin = data_partition_->leaf_begin(0);
       data_size_t end = begin + data_partition_->leaf_count(0);
@@ -393,7 +393,7 @@ void SerialTreeLearner::BeforeTrain() {
         is_data_in_leaf_[indices[i]] = 1;
       }
       OMP_INIT_EX();
-      // initialize ordered bin
+      // initialize ordered bin				初始化有序的bin
       #pragma omp parallel for schedule(static)
       for (int i = 0; i < static_cast<int>(ordered_bin_indices_.size()); ++i) {
         OMP_LOOP_EX_BEGIN();
@@ -415,9 +415,9 @@ void SerialTreeLearner::BeforeTrain() {
 	寻找最佳划分之前的工作
 */
 bool SerialTreeLearner::BeforeFindBestSplit(const Tree* tree, int left_leaf, int right_leaf) {
-  // check depth of current leaf
+  // check depth of current leaf				检查当前叶子的深度
   if (tree_config_->max_depth > 0) {
-    // only need to check left leaf, since right leaf is in same level of left leaf
+    // only need to check left leaf, since right leaf is in same level of left leaf			仅仅需要检查左边的叶子，因为右边的叶子与左边的叶子在相同的层级
     if (tree->leaf_depth(left_leaf) >= tree_config_->max_depth) {
       best_split_per_leaf_[left_leaf].gain = kMinScore;
       if (right_leaf >= 0) {
@@ -443,16 +443,16 @@ bool SerialTreeLearner::BeforeFindBestSplit(const Tree* tree, int left_leaf, int
     histogram_pool_.Get(left_leaf, &smaller_leaf_histogram_array_);
     larger_leaf_histogram_array_ = nullptr;
   } else if (num_data_in_left_child < num_data_in_right_child) {
-    // put parent(left) leaf's histograms into larger leaf's histograms
+    // put parent(left) leaf's histograms into larger leaf's histograms		将父（左）叶子的直方图放入更大的叶子直方图
     if (histogram_pool_.Get(left_leaf, &larger_leaf_histogram_array_)) { parent_leaf_histogram_array_ = larger_leaf_histogram_array_; }
     histogram_pool_.Move(left_leaf, right_leaf);
     histogram_pool_.Get(left_leaf, &smaller_leaf_histogram_array_);
   } else {
-    // put parent(left) leaf's histograms to larger leaf's histograms
+    // put parent(left) leaf's histograms to larger leaf's histograms		将父（左）叶子的直方图放入更大的叶子的直方图
     if (histogram_pool_.Get(left_leaf, &larger_leaf_histogram_array_)) { parent_leaf_histogram_array_ = larger_leaf_histogram_array_; }
     histogram_pool_.Get(right_leaf, &smaller_leaf_histogram_array_);
   }
-  // split for the ordered bin
+  // split for the ordered bin					为有序的bin进行划分
   if (has_ordered_bin_ && right_leaf >= 0) {
     #ifdef TIMETAG
     auto start_time = std::chrono::steady_clock::now();
@@ -475,7 +475,7 @@ bool SerialTreeLearner::BeforeFindBestSplit(const Tree* tree, int left_leaf, int
       is_data_in_leaf_[indices[i]] = 1;
     }
     OMP_INIT_EX();
-    // split the ordered bin
+    // split the ordered bin					划分有序的bin
     #pragma omp parallel for schedule(static)
     for (int i = 0; i < static_cast<int>(ordered_bin_indices_.size()); ++i) {
       OMP_LOOP_EX_BEGIN();

@@ -87,11 +87,11 @@ public:
   }
 
   /*!
-  * \brief Split the data
-  * \param leaf index of leaf
-  * \param feature_bins feature bin data
-  * \param threshold threshold that want to split
-  * \param right_leaf index of right leaf
+  * \brief Split the data								划分数据
+  * \param leaf index of leaf							叶子的索引
+  * \param feature_bins feature bin data				特征的bin数据
+  * \param threshold threshold that want to split		想要划分的阈值
+  * \param right_leaf index of right leaf				右边叶子的索引
   */
   void Split(int leaf, const Dataset* dataset, int feature, const uint32_t* threshold, int num_threshold, bool default_left, int right_leaf) {
     const data_size_t min_inner_size = 512;
@@ -101,7 +101,7 @@ public:
 
     data_size_t inner_size = (cnt + num_threads_ - 1) / num_threads_;
     if (inner_size < min_inner_size) { inner_size = min_inner_size; }
-    // split data multi-threading
+    // split data multi-threading			使用多线程对数据进行划分
     OMP_INIT_EX();
     #pragma omp parallel for schedule(static, 1)
     for (int i = 0; i < num_threads_; ++i) {
@@ -112,7 +112,7 @@ public:
       if (cur_start > cnt) { continue; }
       data_size_t cur_cnt = inner_size;
       if (cur_start + cur_cnt > cnt) { cur_cnt = cnt - cur_start; }
-      // split data inner, reduce the times of function called
+      // split data inner, reduce the times of function called			在内部划分数据，减少调用函数的时间
       data_size_t cur_left_count = dataset->Split(feature, threshold, num_threshold, default_left, indices_.data() + begin + cur_start, cur_cnt,
                                                   temp_left_indices_.data() + cur_start, temp_right_indices_.data() + cur_start);
       offsets_buf_[i] = cur_start;
@@ -129,7 +129,7 @@ public:
       right_write_pos_buf_[i] = right_write_pos_buf_[i - 1] + right_cnts_buf_[i - 1];
     }
     left_cnt = left_write_pos_buf_[num_threads_ - 1] + left_cnts_buf_[num_threads_ - 1];
-    // copy back indices of right leaf to indices_
+    // copy back indices of right leaf to indices_			将右边叶子的索引复制到indices_
     #pragma omp parallel for schedule(static, 1)
     for (int i = 0; i < num_threads_; ++i) {
       if (left_cnts_buf_[i] > 0) {
@@ -148,7 +148,7 @@ public:
   }
 
   /*!
-  * \brief SetLabelAt used data indices before training, used for bagging
+  * \brief SetLabelAt used data indices before training, used for bagging		在训练之前，设置用于训练的数据的索引
   * \param used_data_indices indices of used data
   * \param num_used_data number of used data
   */
@@ -158,7 +158,7 @@ public:
   }
 
   /*!
-  * \brief Get number of data on one leaf
+  * \brief Get number of data on one leaf					获取一个叶子上的数据量
   * \param leaf index of leaf
   * \return number of data of this leaf
   */
@@ -181,21 +181,21 @@ private:
   data_size_t num_data_;
   /*! \brief Number of all leaves */
   int num_leaves_;
-  /*! \brief start index of data on one leaf */
+  /*! \brief start index of data on one leaf		在一个叶子上的数据的起始索引位置 */
   std::vector<data_size_t> leaf_begin_;
-  /*! \brief number of data on one leaf */
+  /*! \brief number of data on one leaf				一个叶子上的数据量*/
   std::vector<data_size_t> leaf_count_;
   /*! \brief Store all data's indices, order by leaf[data_in_leaf0,..,data_leaf1,..] */
   std::vector<data_size_t> indices_;			// 存储所有数据索引，根据leaf[data_in_leaf0,..,data_leaf1,..]排序
-  /*! \brief team indices buffer for split.*/
+  /*! \brief team indices buffer for split.	*/
   std::vector<data_size_t> temp_left_indices_;
-  /*! \brief team indices buffer for split */
+  /*! \brief team indices buffer for split	*/
   std::vector<data_size_t> temp_right_indices_;
-  /*! \brief used data indices, used for bagging */
+  /*! \brief used data indices, used for bagging	使用的数据索引（用于bagging情形）*/
   const data_size_t* used_data_indices_;
-  /*! \brief used data count, used for bagging */
+  /*! \brief used data count, used for bagging		使用的数据量（用于bagging情形）*/
   data_size_t used_data_count_;
-  /*! \brief number of threads */
+  /*! \brief number of threads						线程数	*/
   int num_threads_;
   /*! \brief Buffer for multi-threading data partition, used to store offset for different threads */
   std::vector<data_size_t> offsets_buf_;

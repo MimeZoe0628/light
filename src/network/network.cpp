@@ -54,6 +54,7 @@ void Network::Allreduce(char* input, int input_size, int type_size, char* output
   }
   int count = input_size / type_size;
   // if small package or small count , do it by all gather.(reduce the communication times.)
+  // 如果为短消息，使用all gather (以减少通信时间)
   if (count < num_machines_ || input_size < 4096) {
     AllreduceByAllGather(input, input_size, output, reducer);
     return;

@@ -197,7 +197,7 @@ void DataParallelTreeLearner<TREELEARNER_T>::FindBestSplitsFromHistograms(const 
       smaller_bests_per_thread[tid] = smaller_split;
     }
 
-    // only root leaf
+    // only root leaf		
     if (this->larger_leaf_splits_ == nullptr || this->larger_leaf_splits_->LeafIndex() < 0) continue;
 
     // construct histgroms for large leaf, we init larger leaf as the parent, so we can just subtract the smaller leaf's histograms
@@ -230,15 +230,15 @@ void DataParallelTreeLearner<TREELEARNER_T>::FindBestSplitsFromHistograms(const 
 
   SplitInfo smaller_best_split, larger_best_split;
   smaller_best_split = this->best_split_per_leaf_[this->smaller_leaf_splits_->LeafIndex()];
-  // find local best split for larger leaf
+  // find local best split for larger leaf		为更大的叶子查找出本地最优的划分
   if (this->larger_leaf_splits_->LeafIndex() >= 0) {
     larger_best_split = this->best_split_per_leaf_[this->larger_leaf_splits_->LeafIndex()];
   }
 
-  // sync global best info
+  // sync global best info						同步全局最优划分信息
   SyncUpGlobalBestSplit(input_buffer_.data(), input_buffer_.data(), &smaller_best_split, &larger_best_split, this->tree_config_->max_cat_threshold);
 
-  // set best split
+  // set best split								设置最优划分
   this->best_split_per_leaf_[this->smaller_leaf_splits_->LeafIndex()] = smaller_best_split;
   if (this->larger_leaf_splits_->LeafIndex() >= 0) {
     this->best_split_per_leaf_[this->larger_leaf_splits_->LeafIndex()] = larger_best_split;
@@ -249,12 +249,12 @@ template <typename TREELEARNER_T>
 void DataParallelTreeLearner<TREELEARNER_T>::Split(Tree* tree, int best_Leaf, int* left_leaf, int* right_leaf) {
   TREELEARNER_T::Split(tree, best_Leaf, left_leaf, right_leaf);
   const SplitInfo& best_split_info = this->best_split_per_leaf_[best_Leaf];
-  // need update global number of data in leaf
+  // need update global number of data in leaf				需要更新叶子上的全局数据的数量
   global_data_count_in_leaf_[*left_leaf] = best_split_info.left_count;
   global_data_count_in_leaf_[*right_leaf] = best_split_info.right_count;
 }
 
-// instantiate template classes, otherwise linker cannot find the code
+// instantiate template classes, otherwise linker cannot find the code		初始化模板类
 template class DataParallelTreeLearner<GPUTreeLearner>;
 template class DataParallelTreeLearner<SerialTreeLearner>;
 
