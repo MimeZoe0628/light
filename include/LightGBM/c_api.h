@@ -358,7 +358,7 @@ LIGHTGBM_C_EXPORT int LGBM_BoosterLoadModelFromString(
 LIGHTGBM_C_EXPORT int LGBM_BoosterFree(BoosterHandle handle);
 
 /*!
-* \brief Merge model in two booster to first handle
+* \brief Merge model in two booster to first handle				将两个booster中的模型合并到第一个handle中
 * \param handle handle, will merge other handle to this
 * \param other_handle
 * \return 0 when succeed, -1 when failure happens
