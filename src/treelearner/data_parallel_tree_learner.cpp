@@ -59,7 +59,7 @@ void DataParallelTreeLearner<TREELEARNER_T>::BeforeTrain() {
     if (inner_feature_index == -1) { continue; }
     if (this->is_feature_used_[inner_feature_index]) {
       int cur_min_machine = static_cast<int>(ArrayArgs<int>::ArgMin(num_bins_distributed));		//获取bin数量最少的结点
-      feature_distribution[cur_min_machine].push_back(inner_feature_index);						//将特征存储到对应节点
+      feature_distribution[cur_min_machine].push_back(inner_feature_index);						//将特征索引存储到对应节点
       auto num_bin = this->train_data_->FeatureNumBin(inner_feature_index);
       if (this->train_data_->FeatureBinMapper(inner_feature_index)->GetDefaultBin() == 0) {
         num_bin -= 1;
@@ -77,7 +77,7 @@ void DataParallelTreeLearner<TREELEARNER_T>::BeforeTrain() {
   reduce_scatter_size_ = 0;
   for (int i = 0; i < num_machines_; ++i) {
     block_len_[i] = 0;
-    for (auto fid : feature_distribution[i]) {					//获取每个节点中的所有特征
+    for (auto fid : feature_distribution[i]) {					//获取每个节点中的所有特征索引
       auto num_bin = this->train_data_->FeatureNumBin(fid);
       if (this->train_data_->FeatureBinMapper(fid)->GetDefaultBin() == 0) {
         num_bin -= 1;
@@ -95,7 +95,7 @@ void DataParallelTreeLearner<TREELEARNER_T>::BeforeTrain() {
   // get buffer_write_start_pos_	(所有节点)
   int bin_size = 0;
   for (int i = 0; i < num_machines_; ++i) {						//遍历所有节点
-    for (auto fid : feature_distribution[i]) {					//遍历每一个节点中的所有特征
+    for (auto fid : feature_distribution[i]) {					//遍历每一个节点中的所有特征索引
       buffer_write_start_pos_[fid] = bin_size;
       auto num_bin = this->train_data_->FeatureNumBin(fid);
       if (this->train_data_->FeatureBinMapper(fid)->GetDefaultBin() == 0) {
@@ -107,7 +107,7 @@ void DataParallelTreeLearner<TREELEARNER_T>::BeforeTrain() {
 
   // get buffer_read_start_pos_		(本地节点)
   bin_size = 0;
-  for (auto fid : feature_distribution[rank_]) {
+  for (auto fid : feature_distribution[rank_]) {		//遍历当前节点的特征索引
     buffer_read_start_pos_[fid] = bin_size;
     auto num_bin = this->train_data_->FeatureNumBin(fid);
     if (this->train_data_->FeatureBinMapper(fid)->GetDefaultBin() == 0) {
