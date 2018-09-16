@@ -744,10 +744,13 @@ std::vector<std::string> DatasetLoader::SampleTextDataFromFile(const char* filen
   }
   return out_data;
 }
-/*! \brief 从文件读取的文本中解析构造Bin （并行训练）
- *			
- *
- *
+/*! \brief 从文件读取的文本中解析构造Bin （单机/并行训练）
+ *			多机并行构造bin：
+ *			1. 为各个机器分配特征，每个机器根据本地特征的划分bin
+ *			2. 根据所有机器上bin数最大的特征，计算该特征BinMapper的二进制数据大小，然后根据该大小计算所有特征应占空间
+ *			3. 根据上一步得到的特征空间在每个机器上分配输入输出缓冲区
+ *			4. 对各个机器上的特征的bin数据进行All Gather操作（即将所有特征bin信息传播给所有机器）
+ *			5. 根据特征的bin构造数据集
  */
 void DatasetLoader::ConstructBinMappersFromTextData(int rank, int num_machines, const std::vector<std::string>& sample_data, const Parser* parser, Dataset* dataset) {
 
@@ -846,6 +849,7 @@ void DatasetLoader::ConstructBinMappersFromTextData(int rank, int num_machines, 
       start[i + 1] = start[i] + len[i];
     }
     len[num_machines - 1] = total_num_feature - start[num_machines - 1];
+	//以下代码针对本地特征进行操作
     OMP_INIT_EX();
     #pragma omp parallel for schedule(guided)
     for (int i = 0; i < len[rank]; ++i) {
@@ -895,7 +899,7 @@ void DatasetLoader::ConstructBinMappersFromTextData(int rank, int num_machines, 
       start[i] *= type_size;
       len[i] *= type_size;
     }
-    // gather global feature bin mappers
+    // gather global feature bin mappers		所有的机器都包含所有特征的Bin Mapper信息
     Network::Allgather(input_buffer.data(), buffer_size, start.data(), len.data(), output_buffer.data());
     // restore features bins from buffer
     for (int i = 0; i < total_num_feature; ++i) {
