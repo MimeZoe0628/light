@@ -185,7 +185,7 @@ void Application::LoadData() {
 
 void Application::InitTrain() {
   if (config_.is_parallel) {
-    // need init network 需要初始化network?
+    // need init network
     Network::Init(config_.network_config);
     Log::Info("Finished initializing network");
     config_.boosting_config.tree_config.feature_fraction_seed =

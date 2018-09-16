@@ -118,13 +118,13 @@ public:
 
   inline void PredictContrib(const double* feature_values, int num_features, double* output);
 
-  /*! \brief Get Number of leaves*/
+  /*! \brief Get Number of leaves 获取叶子数目*/
   inline int num_leaves() const { return num_leaves_; }
 
-  /*! \brief Get depth of specific leaf*/
+  /*! \brief Get depth of specific leaf 获取特定叶子深度*/
   inline int leaf_depth(int leaf_idx) const { return leaf_depth_[leaf_idx]; }
 
-  /*! \brief Get feature of specific split*/
+  /*! \brief Get feature of specific split 获取指定的划分*/
   inline int split_feature(int split_idx) const { return split_feature_[split_idx]; }
 
   inline double split_gain(int split_idx) const { return split_gain_[split_idx]; }
@@ -133,13 +133,14 @@ public:
   inline int data_count(int node) const { return node >= 0 ? internal_count_[node] : leaf_count_[~node]; }
 
   /*!
-  * \brief Shrinkage for the tree's output
+  * \brief Shrinkage for the tree's output		树输出的收缩
   *        shrinkage rate (a.k.a learning rate) is used to tune the traning process
   * \param rate The factor of shrinkage
   */
   inline void Shrinkage(double rate) {
     #pragma omp parallel for schedule(static, 1024) if (num_leaves_ >= 2048)
     for (int i = 0; i < num_leaves_; ++i) {
+		//叶子值乘上rate以为缩减率
       leaf_value_[i] *= rate;
       if (leaf_value_[i] > kMaxTreeOutput) { leaf_value_[i] = kMaxTreeOutput; } else if (leaf_value_[i] < -kMaxTreeOutput) { leaf_value_[i] = -kMaxTreeOutput; }
     }

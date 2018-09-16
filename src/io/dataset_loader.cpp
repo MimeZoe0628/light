@@ -744,7 +744,7 @@ std::vector<std::string> DatasetLoader::SampleTextDataFromFile(const char* filen
   }
   return out_data;
 }
-/*! \brief 从文件读取的文本中解析构造Bin 
+/*! \brief 从文件读取的文本中解析构造Bin （并行训练）
  *			
  *
  *
